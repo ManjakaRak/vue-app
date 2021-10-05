@@ -30,19 +30,21 @@
         </div>
       </aside>
     </div>
+    <footer-component></footer-component>
   </div>
-  
 </template>
 
 <script>
 import Ban from './Ban.vue'
+import Footer from './Footer'
 import Property from './Property.vue'
 import axios from 'axios'
 export default {
   name: 'Main',
   components: {
     'ban-component': Ban,
-    'property-component': Property
+    'property-component': Property,
+    'footer-component': Footer
   },
   data () {
     return {

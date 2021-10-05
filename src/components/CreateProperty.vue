@@ -2,7 +2,7 @@
   <div class="create-property">
     <ban-component></ban-component>
     <form @submit.prevent="handleSubmit" class="container mb-5">
-      <h2 class="display-4">Ajouter un propriété</h2>
+      <h2 class="display-4 mt-5">Ajouter un propriété</h2>
       <div class="row">
         <div class="form-group col-md-12">
           <!-- nom -->
@@ -13,21 +13,21 @@
         </div>
         <div class="form-group col-md-6">
           <!-- date de construction -->
-          <label for="">Date de construction</label><input :class="{'error': errors.construction_date.check}" v-model="property.construction_date" type="date" class="default">
+          <label>Date de construction</label><input :class="{'error': errors.construction_date.check}" v-model="property.construction_date" type="date" class="default">
           <small v-if="errors.construction_date.check" class="text-danger">
             {{ errors.construction_date.message }}
           </small>
         </div>
         <div class="form-group col-md-6">
           <!-- lieu -->
-          <label for="">Localisation</label><input :class="{'error': errors.location.check}" v-model="property.location" type="text" placeholder="Lieu ou Adresse*" class="default">
+          <label>Localisation</label><input :class="{'error': errors.location.check}" v-model="property.location" type="text" placeholder="Lieu ou Adresse*" class="default">
           <small v-if="errors.location.check" class="text-danger">
             {{ errors.location.message }}
           </small>
         </div>
         <div class="form-group col-md-12">
           <!-- prix -->
-          <label >Prix</label><input :class="{'error': errors.price.check}" v-model="property.price" class="form-control" placeholder="€" type="number">
+          <label >Prix</label><input :class="{'error': errors.price.check}" v-model="property.price" placeholder="€" type="number">
           <small v-if="errors.price.check" class="text-danger">
             {{ errors.price.message }}
           </small>
@@ -38,21 +38,21 @@
         <div class="row">
           <div class="col-md-4 form-group">
           <!-- surface m2 -->
-          <input type="number" :class="{'error': errors.surface.check}" v-model="property.surface" class="form-control form-control-sm" placeholder="Surface en m2 *">
+          <input type="number" :class="{'error': errors.surface.check}" v-model="property.surface" placeholder="Surface en m2 *">
           <small v-if="errors.surface.check" class="text-danger">
             {{ errors.surface.message }}
           </small>
           </div>
           <div class="col-md-4 form-group">
           <!-- etage -->
-          <input type="number" :class="{'error': errors.stair.check}" v-model="property.stair" class="form-control form-control-sm" placeholder="Nombre d'etage *">
+          <input type="number" :class="{'error': errors.stair.check}" v-model="property.stair" placeholder="Nombre d'etage *">
           <small v-if="errors.stair.check" class="text-danger">
             {{ errors.stair.message }}
           </small>
           </div>
           <div class="col-md-4 form-group">
             <!-- chambre -->
-            <input :class="{'error': errors.room.check}" type="number" v-model="property.room" class="form-control form-control-sm default" placeholder="Nombre de chambre *">
+            <input :class="{'error': errors.room.check}" type="number" v-model="property.room" placeholder="Nombre de chambre *">
             <small v-if="errors.room.check" class="text-danger">
               {{ errors.room.message }}
             </small>
@@ -262,8 +262,9 @@ export default {
   input {
     width: 100%;
     padding: 5px;
+    margin-bottom: 20px;
     border: none;
-    border-bottom: 1px solid rgba(0, 0, 255, 0.521);
+    border-bottom: 1px solid rgb(200, 200, 200);
   }
   .create-property input:focus {
     background-color: #c7c7c763;

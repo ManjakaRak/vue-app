@@ -89,16 +89,19 @@
         <button type="submit" class="btn btn-success" id="submit-btn">Enregistrer</button>
       </div>
     </form>
+    <footer-component></footer-component>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import Ban from './Ban.vue'
+import Footer from './Footer'
 export default {
   name: 'CreateProperty',
   components: {
-    'ban-component': Ban
+    'ban-component': Ban,
+    'footer-component': Footer
   },
   data () {
     return {
@@ -120,7 +123,7 @@ export default {
         climatization: false,
         category: null
       },
-      // handle error
+      // create error obj and handle error
       errors: {
         name: {
           check: false
@@ -192,11 +195,11 @@ export default {
         data: this.property,
         headers: {'Content-Type': 'application/json'}
       })
-        .then((response) => {
+        .then((_) => {
           this.$router.push({name: 'Main', params: {message: 'Success'}})
         })
         .catch((error) => {
-          // CATCH ERROR FROM SERVER IF NOT VALIDATEd
+          // CATCH ERROR FROM SERVER IF NOT VALID
           if (error.response.data.errors.name) {
             this.errors.name.message = 'Le nom ne doit pas etre vide'
             this.errors.name.check = true

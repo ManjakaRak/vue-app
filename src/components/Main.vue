@@ -49,8 +49,7 @@ export default {
   data () {
     return {
       properties: [],
-      emptyProperties: true,
-      proprityAdded: false
+      emptyProperties: true
     }
   },
   mounted () {
@@ -61,16 +60,19 @@ export default {
     }
   },
   methods: {
-    async loadProperties () {
-      return axios({
-        method: 'get',
-        url: ('http://localhost:8081/api/posts')
+    loadProperties () {
+      axios({
+        url: 'http://localhost:8081/api/posts',
+        method: 'GET'
       })
-        .then(response => {
-          this.properties = response.data
+        .then(res => {
+          this.properties = res.data
+          // check if properties are empty after fetch data from server
           this.checkIfEmptyProperties()
         })
-        .catch(e => console.log(e))
+        .catch(error => {
+          console.log(error)
+        })
     },
     checkIfEmptyProperties () {
       if (this.properties.length !== 0) {
@@ -90,7 +92,7 @@ export default {
     padding: 0;
   }
   .col-md-8{
-    padding-right: 0px
+    padding-right: 0
   }
   .card {
     margin: 20px;

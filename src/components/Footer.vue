@@ -1,6 +1,6 @@
 <template>
   <div id="footer">
-    <h3>2021 Copyright <i class="fa fa-copyright" aria-hidden="true"></i></h3>
+    <h4>2021 Copyright  <i class="fa fa-copyright" aria-hidden="true"></i></h4>
   </div>
 </template>
 
@@ -20,10 +20,14 @@ export default {
   align-items: center;
   flex-direction: column;
 }
-#footer h3 {
+#footer h4 {
   height: 100%;
   display: flex;
   align-items: center;
   flex-direction: row;
+}
+#footer h4 i {
+  font-size: 15px;
+  padding: 5px;
 }
 </style>

@@ -1,21 +1,39 @@
+// server for api rest
 // import
 const express = require('express')
-const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const postController = require('./controllers/posts')
+// const router = express.Router()
 
-// server
+// instance express
 const app = express()
 
-// configuration
-// bodyParser
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(cors())
 
-// route
-app.get('/', (req, res) => {
-  res.status(200).send('ok')
+// connect to MongoDB
+mongoose.connect('mongodb://localhost/ecommerce', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(_ => {
+  console.log('Connection to db has made successfully')
+}).catch(err => {
+  console.log(err.stack)
 })
 
-// launch server
-app.listen(5000, _ => {
-  console.log('server is running on 5000')
+// config api routes (endpoints)
+app.get('/api', (_, res) => {
+  res.json({message: 'API initialized'})
+})
+// app.get('/', router)
+
+// PORT
+const PORT = process.env.PORT || 8081
+
+// fetch data from controllers
+postController(app)
+
+// run server
+app.listen(PORT, function () {
+  console.log(`server is running on ${PORT}`)
 })

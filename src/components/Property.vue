@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="card-footer">
-      <small class="text-info display-4">{{ formatedPrice }}</small>
+      <small class="text-info display-4">{{ formattedPrice }}</small>
     </div>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
     }
   },
   computed: {
-    formatedPrice () {
+    formattedPrice () {
       let tab = Array.from(this.property.price)
       let j = 0
       for (let i = tab.length - 1; i >= 0; i--) {
@@ -57,8 +57,7 @@ export default {
           tab[i] = '.' + tab[i]
         }
       }
-      const out = tab.join('') + ' €'
-      return out
+      return tab.join('') + ' €'
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content" :id="property._id">
     <div class="card-header">
       <ul class="nav nav-pills card-header-pills">
         <li class="nav-item">
@@ -16,7 +16,7 @@
       <img src="../assets/logo.png" class="img" alt="" srcset="">
       <div v-on:mouseover="handleShowDetail" v-on:mouseout="handleHideDetail" class="transparent-bg" >
         <transition name="fade-detail">
-          <router-link v-bind:to="{name: 'Detail', params:{id: property._id}}"> <button v-show="showDetailButton" class="detail-btn">Details</button></router-link>:
+          <router-link v-bind:to="{name: 'Property', params:{id: property._id}}"> <button v-show="showDetailButton" class="detail-btn">Details</button></router-link>:
         </transition>
       </div>
     </div>
@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     formattedPrice () {
-      let tab = Array.from(this.property.price)
+      let tab = Array.from(this.property.price + '')
       let j = 0
       for (let i = tab.length - 1; i >= 0; i--) {
         j = j + 1
@@ -61,6 +61,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped>

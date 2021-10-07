@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '@/components/Main'
-import CreateProperty from '@/components/CreateProperty'
+import AddProperty from '@/components/CreateProperty'
+import Property from '@/components/Detail'
 
 Vue.use(Router)
 
@@ -13,9 +14,15 @@ export default new Router({
       component: Main
     },
     {
-      path: '/create-property',
-      name: 'CreateProperty',
-      component: CreateProperty
+      path: '/add-property',
+      name: 'AddProperty',
+      component: AddProperty
+    },
+    {
+      path: '/property/:id',
+      name: 'Property',
+      component: Property
     }
-  ]
+  ],
+  mode: 'history'
 })

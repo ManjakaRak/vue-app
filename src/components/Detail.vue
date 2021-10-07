@@ -13,12 +13,12 @@
             <div class="p-5 c">
               <div class="name-price">
                 <h1><q>{{property.name}}</q></h1>
-                <h1 class="text-danger">{{formatedPrice}}</h1>
+                <h1 class="text-danger">{{ formattedPrice }}</h1>
               </div>
               <hr class="hr-property">
               <div class="outside">
                 <h3>Année de construction</h3>
-                <h3><dt>{{formated_date}}</dt></h3>
+                <h3><dt>{{ formatted_date }}</dt></h3>
               </div>
               <hr class="hr-property">
               <div class="outside">
@@ -96,6 +96,7 @@
             <p class="text-center">
               <small class="help-text">* Obligatoire</small>
             </p>
+            <input type="hidden" :value="property._id">
             <input type="submit" class="btn btn-danger" value="Envoyer">
           </form>
         </div>
@@ -106,10 +107,9 @@
 
 <script>
 import Ban from './Ban.vue'
-// import Property from './Property.vue'
 import axios from 'axios'
 export default {
-  name: 'Detail',
+  name: 'Post',
   data () {
     return {
       property: {}
@@ -119,41 +119,41 @@ export default {
     'ban-component': Ban
   },
   methods: {
-    async loadPropertie () {
-      return axios({
-        method: 'get',
-        url: `http://localhost:8081/api/post/${this.$route.params.id}`
+    loadProperty () {
+      axios({
+        url: `http://localhost:5000/api/property/${this.$route.params.id}`,
+        method: 'GET'
       })
-        .then(
-          res => {
-            this.property = res.data
-          }
-        )
-        .catch(e => console.log(e))
+        .then(response => {
+          this.property = response.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   computed: {
-    formatedPrice () {
-      if (this.property.price) {
-        let tab = Array.from(this.property.price)
-        let j = 0
-        for (let i = tab.length - 1; i >= 0; i--) {
-          j = j + 1
-          if (j % 3 === 0 && i !== 0) {
-            tab[i] = '.' + tab[i]
-          }
+    formattedPrice () {
+      // if (this.property.price) {
+      let tab = Array.from(this.property.price + '')
+      let j = 0
+      for (let i = tab.length - 1; i >= 0; i--) {
+        j = j + 1
+        if (j % 3 === 0 && i !== 0) {
+          tab[i] = '.' + tab[i]
         }
-        const out = tab.join('') + ' €'
-        return out
       }
+      return tab.join('') + ' €'
+      // }
+      // return this.property.price
     },
-    formated_date () {
+    formatted_date () {
       const fd = new Date(this.property.construction_date)
       return fd.getFullYear()
     }
   },
   mounted () {
-    this.loadPropertie()
+    this.loadProperty()
   }
 }
 </script>
@@ -234,7 +234,7 @@ export default {
   }
   #property-name::after {
     position: absolute;
-    background: linear-gradient(#fff #111);
+    /*background: linear-gradient(#fff #111);*/
     border-bottom: 3px solid;
     border-right: 200px solid;
     content: "";

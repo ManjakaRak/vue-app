@@ -1,5 +1,10 @@
 <template>
-  <div class="main">
+  <div class="main" @click="hideNotification">
+    <transition name="notification">
+      <div v-if="propertyAdded" id="notification-content">
+        <div id="notification">Propriété ajoutée <i class="fa fa-check-circle" aria-hidden="true"></i></div>
+      </div>
+    </transition>
     <ban-component></ban-component>
     <div  class="main-container row">
       <section class="col-md-9">
@@ -49,24 +54,41 @@ export default {
   data () {
     return {
       properties: [],
-      emptyProperties: true
+      emptyProperties: true,
+      propertyAdded: false
     }
   },
-  mounted () {
-    this.loadProperties()
-    this.checkIfEmptyProperties()
-    if (this.$route) {
-      // todo
+  async mounted () {
+    await this.loadProperties()
+    await this.checkIfEmptyProperties()
+    // operation for notification
+    if (this.$route.params.message) {
+      this.propertyAdded = true
     }
+    // animation on start
+    await setTimeout(() => {
+      // this.propertyAdded = true
+      if (this.propertyAdded) {
+        document.getElementById('notification-content').style.opacity = '1'
+        document.getElementById('notification-content').style.top = '40px'
+      }
+    }, 100)
+    // hide notification automatically
+    await setTimeout(() => {
+      if (this.propertyAdded) {
+        this.hideNotification()
+      }
+    }, 3000)
+    // end operation for notification
   },
   methods: {
-    loadProperties () {
-      axios({
-        url: 'http://localhost:8081/api/posts',
+    async loadProperties () {
+      await axios({
+        url: 'http://localhost:5000/api/properties',
         method: 'GET'
       })
-        .then(res => {
-          this.properties = res.data
+        .then(response => {
+          this.properties = response.data
           // check if properties are empty after fetch data from server
           this.checkIfEmptyProperties()
         })
@@ -78,6 +100,9 @@ export default {
       if (this.properties.length !== 0) {
         this.emptyProperties = false
       }
+    },
+    hideNotification () {
+      this.propertyAdded = false
     }
   }
 }
@@ -85,8 +110,29 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .item-container {
-    text-align: center;
+  #notification-content {
+    width: 100%;
+    position: fixed;
+    z-index: 1000000;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    transition: all 500ms ease-in;
+    top: -100px;
+  }
+  #notification {
+    background-color: #42b983;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .notification-leave-active {
+    transition: all 500ms ease-out;
+  }
+  .notification-leave-to {
+    opacity: 0;
+    transform: translateY(-100px);
   }
   .col-sm-4 {
     padding: 0;

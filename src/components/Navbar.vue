@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <router-link class="nav-item nav-link active" to="/"><i class="fa fa-home" aria-hidden="true"></i> Accueil <span class="sr-only">(current)</span></router-link>
-        <router-link to="/create-property" class="nav-item nav-link" href="#"><i class="fa fa-building" aria-hidden="true"></i> Propriétés</router-link>
+        <router-link to="/add-property" class="nav-item nav-link" href="#"><i class="fa fa-building" aria-hidden="true"></i> Propriétés</router-link>
         <div id="category">
           <a v-on:mouseover="showMenu" v-on:mouseout="hideMenu" :id="{'is-active':showCategoryMenu}" class="nav-item nav-link is-active" href="#" tabindex="-1" aria-disabled="true">Categorie <i class="fa fa-caret-down" aria-hidden="true"></i></a>
           <transition name="fade-category">

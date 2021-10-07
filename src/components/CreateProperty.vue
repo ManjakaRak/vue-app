@@ -188,14 +188,14 @@ export default {
     },
     // SUBMIT DATTA
     async handleSubmit () {
-      return axios({
+      await axios({
         // handle on server with axios
         method: 'post',
-        url: 'http://localhost:8081/api/create-post',
-        data: this.property,
-        headers: {'Content-Type': 'application/json'}
+        url: 'http://localhost:5000/api/property/add-property',
+        headers: {'Content-Type': 'application/json'},
+        data: this.property
       })
-        .then((_) => {
+        .then((data) => {
           this.$router.push({name: 'Main', params: {message: 'Success'}})
         })
         .catch((error) => {
@@ -265,7 +265,6 @@ export default {
   input {
     width: 100%;
     padding: 5px;
-    margin-bottom: 20px;
     border: none;
     border-bottom: 1px solid rgb(200, 200, 200);
   }

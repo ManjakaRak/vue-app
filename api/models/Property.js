@@ -3,8 +3,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const PostSchema = new Schema({
-  name: {type: String, required: true},
+const PropertySchema = new Schema({
+  name: { type: String, required: true },
+  price: {type: Number, required: true},
   construction_date: {type: Date, required: true},
   surface: {type: Number, required: true},
   location: {type: String, required: true},
@@ -16,7 +17,7 @@ const PostSchema = new Schema({
   category: {type: String, required: true}
 })
 
-const PostModel = mongoose.model('Post', PostSchema)
+const PropertyModel = mongoose.model('Property', PropertySchema)
 
-// export PostModel
-module.exports = PostModel
+// export PropertyModel
+module.exports = PropertyModel

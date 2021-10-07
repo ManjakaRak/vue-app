@@ -2,7 +2,7 @@
   "name": "myapp",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "m3t4",
+  "author": "Manjaka Rak",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

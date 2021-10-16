@@ -7,7 +7,7 @@ const PropertyModel = require('../models/Property')
 const controller = app => {
   // get all properties
   app.get('/api/properties', (req, res) => {
-    PropertyModel.find({})
+    PropertyModel.find({waiting: false})
       .then(data => {
         res.send(data)
       })
@@ -40,12 +40,14 @@ const controller = app => {
       climatization: req.body.climatization,
       room: req.body.room,
       stair: req.body.stair,
-      category: req.body.category
+      category: req.body.category,
+      sold: false,
+      waiting: false
     })
 
     newProperty.save()
       .then(data => {
-        res.send(data)
+        res.status(200).json(data)
       })
       .catch(error => {
         res.status(400).json(error)

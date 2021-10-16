@@ -10,7 +10,8 @@ const ContactSchema = new Schema({
   tel: {type: Number, required: true},
   email: { type: String, required: true },
   message: { type: String, required: false },
-  property: {type: Object, required: true}
+  property: { type: Object, required: true },
+  pending: { type: Boolean , required: true}
 })
 
 // create model from schema

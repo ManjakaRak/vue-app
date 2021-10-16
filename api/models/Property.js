@@ -14,7 +14,9 @@ const PropertySchema = new Schema({
   climatization: {type: Boolean, required: true},
   room: {type: Number, required: true},
   stair: {type: Number, required: true},
-  category: {type: String, required: true}
+  category: { type: String, required: true },
+  sold: { type: Boolean, required: true },
+  waiting: { type: Boolean, required: true }
 })
 
 const PropertyModel = mongoose.model('Property', PropertySchema)

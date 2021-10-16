@@ -3,8 +3,11 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
-const postController = require('./controllers/properties')
 const bodyParser = require('body-parser')
+
+// controllers
+const contactController = require('./controllers/contacts')
+const propertyController = require('./controllers/properties')
 // const router = express.Router()
 
 // instance express
@@ -34,7 +37,8 @@ app.get('/api', (_, res) => {
 const PORT = process.env.PORT || 5000
 
 // fetch data from controllers
-postController(app)
+propertyController(app)
+contactController(app)
 
 // run server
 app.listen(PORT, () => {

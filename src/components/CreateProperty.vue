@@ -191,12 +191,14 @@ export default {
       await axios({
         // handle on server with axios
         method: 'post',
-        url: 'http://localhost:5000/api/property/add-property',
-        headers: {'Content-Type': 'application/json'},
+        url: 'http://localhost:5000/api/property/add',
+        // url: 'http://localhost:7000/api/property/add',
+        headers: {'Content-Type': 'application/json'}, // set header for json handling
         data: this.property
       })
         .then((data) => {
           this.$router.push({name: 'Main', params: {message: 'Success'}})
+          console.log('ok')
         })
         .catch((error) => {
           // CATCH ERROR FROM SERVER IF NOT VALID

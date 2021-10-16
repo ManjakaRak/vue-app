@@ -1,5 +1,5 @@
 <template>
-  <div class="content" :id="property._id">
+  <div class="content" :id="property.id">
     <div class="card-header">
       <ul class="nav nav-pills card-header-pills">
         <li class="nav-item">

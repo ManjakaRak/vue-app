@@ -27,7 +27,7 @@ const controller = app => {
       })
   })
   // post property
-  app.post('/api/property/add-property', (req, res) => {
+  app.post('/api/property/add', (req, res) => {
     // creae new model from PostModel
     const newProperty = new PropertyModel({
       name: req.body.name,

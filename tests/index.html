@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form id="submit" action="http://localhost:7000/api" method="post">
+    Pseudo: <input type="text" id="username" name="username">
+    Mot de passe: <input type="password" name="pass" id="pass">
+    <input type="submit" value="Connexion">
+  </form>
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script>
+    const pseudo = document.getElementById('username');
+    const pass = document.getElementById('pass');
+    const pseudoValue = pseudo.value;
+    const passValue = pass.value;
+    const form = document.querySelector('form')
+    
+    const ajax = new XMLHttpRequest();
+    document.getElementById('submit').addEventListener('submit', function (event) {
+      const myPhrase = document.createElement('p');
+      document.getElementById('submit').append(myPhrase)
+      event.preventDefault();
+      ajax.onreadystatechange = function () {
+        myPhrase.innerText = pseudo.value;
+      }
+      ajax.open('post', 'http://localhost:7000/api', true)
+      const data = new FormData(form)
+      ajax.send(data)
+    });
+  </script>
+</body>
+</html>

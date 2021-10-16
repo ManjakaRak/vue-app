@@ -66,7 +66,7 @@ export default {
       this.propertyAdded = true
     }
     // animation on start
-    await setTimeout(() => {
+    setTimeout(() => {
       // this.propertyAdded = true
       if (this.propertyAdded) {
         document.getElementById('notification-content').style.opacity = '1'
@@ -74,7 +74,7 @@ export default {
       }
     }, 100)
     // hide notification automatically
-    await setTimeout(() => {
+    setTimeout(() => {
       if (this.propertyAdded) {
         this.hideNotification()
       }
@@ -89,6 +89,7 @@ export default {
       })
         .then(response => {
           this.properties = response.data
+          // console.log(response.data)
           // check if properties are empty after fetch data from server
           this.checkIfEmptyProperties()
         })

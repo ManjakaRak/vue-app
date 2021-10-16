@@ -16,7 +16,7 @@
       <img src="../assets/logo.png" class="img" alt="" srcset="">
       <div v-on:mouseover="handleShowDetail" v-on:mouseout="handleHideDetail" class="transparent-bg" >
         <transition name="fade-detail">
-          <router-link v-bind:to="{name: 'Property', params:{id: property._id}}"> <button v-show="showDetailButton" class="detail-btn">Details</button></router-link>:
+          <router-link :to="{name: 'Property', params:{id: property._id}}"> <button v-show="showDetailButton" class="detail-btn">Details</button></router-link>:
         </transition>
       </div>
     </div>

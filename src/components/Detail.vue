@@ -75,24 +75,28 @@
         </div>
         <div class="contact">
           <h4 class="text-center text-danger">Contact</h4>
-          <form>
+          <form @submit.prevent="handleContactForm">
             <div class="row">
               <div class="col-xl">
-                <input type="text" name="first_name" placeholder="votre nom *" id="first-name">
+                <input v-model="contact.name" type="text" name="first_name" placeholder="votre nom *" id="first-name">
+                <small v-if="contactError.name.check">{{contactError.name.msg}}</small>
               </div>
               <div class="col-xl">
-                <input type="text" name="last_name" placeholder="votre prénom *" id="last-name">
+                <input v-model="contact.lastName" type="text" name="last_name" placeholder="votre prénom *" id="last-name">
+                <small v-if="contactError.lastName.check">{{contactError.lastName.msg}}</small>
               </div>
             </div>
             <div class="row">
               <div class="col-xl">
-                <input type="text" name="tel" id="tel" placeholder="votre numéro de téléphone *">
+                <input v-model="contact.tel" type="text" name="tel" id="tel" placeholder="votre numéro de téléphone *">
+                <small v-if="contactError.tel.check">{{contactError.tel.msg}}</small>
               </div>
               <div class="col-xl">
-                <input type="text" name="email" placeholder="votre@email *" id="email">
+                <input v-model="contact.email" type="text" name="email" placeholder="votre@email *" id="email">
+                <small v-if="contactError.email.check">{{ contactError.email.msg }}</small>
               </div>
             </div>
-            <textarea type="text" name="message" placeholder="votre message *" id="message"></textarea>
+            <textarea v-model="contact.message" type="text" name="message" placeholder="votre message *" id="message"></textarea>
             <p class="text-center">
               <small class="help-text">* Obligatoire</small>
             </p>
@@ -109,10 +113,17 @@
 import Ban from './Ban.vue'
 import axios from 'axios'
 export default {
-  name: 'Post',
+  name: 'Detail',
   data () {
     return {
-      property: {}
+      property: {},
+      contact: {},
+      contactError: {
+        name: {check: false},
+        lastName: {check: false},
+        tel: {check: false},
+        email: {check: false}
+      }
     }
   },
   components: {
@@ -127,8 +138,44 @@ export default {
         .then(response => {
           this.property = response.data
         })
+    },
+    async handleContactForm () {
+      this.contact.property = this.property
+      this.contact.property.waiting = true
+      await axios({
+        url: 'http://localhost:5000/api/contact/add',
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        data: this.contact
+      })
+        .then(data => {
+          this.$router.push({name: 'ContactsList', params: {message: 'success'}})
+        })
         .catch(error => {
-          console.log(error)
+          if (error.response.data.errors.name) {
+            this.contactError.name.msg = 'Vous devez specifié votre nom'
+            this.contactError.name.check = true
+          } else {
+            this.contactError.name.check = false
+          }
+          if (error.response.data.errors.lastName) {
+            this.contactError.lastName.msg = 'Vous devez specifié votre prenom'
+            this.contactError.lastName.check = true
+          } else {
+            this.contactError.lastName.check = false
+          }
+          if (error.response.data.errors.tel) {
+            this.contactError.tel.msg = 'Vous devez specifié un numero de telephone'
+            this.contactError.tel.check = true
+          } else {
+            this.contactError.tel.check = false
+          }
+          if (error.response.data.errors.email) {
+            this.contactError.email.msg = 'Email obligatoire'
+            this.contactError.email.check = true
+          } else {
+            this.contactError.email.check = false
+          }
         })
     }
   },
@@ -160,6 +207,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  small {
+    color: crimson;
+    font-size: 10px;
+  }
   input[type="submit"] {
     border-radius: 0;
     width: 100%;
@@ -177,7 +228,7 @@ export default {
     padding: 8px 5px;
     border: none;
     border-bottom: 1px solid rgb(200, 35, 51);
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     width: 100%;
   }
   input:not(input[type="submit"]):focus, textarea:focus {

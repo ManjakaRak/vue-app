@@ -111,17 +111,9 @@ export default {
       allocationCategory: 'Allocation',
       // form data
       property: {
-        name: '',
-        construction_date: '',
-        location: '',
-        price: '',
-        surface: '',
-        stair: '',
-        room: '',
-        water: false,
         electricity: false,
         climatization: false,
-        category: null
+        water: false
       },
       // create error obj and handle error
       errors: {
@@ -198,9 +190,9 @@ export default {
       })
         .then((data) => {
           this.$router.push({name: 'Main', params: {message: 'Success'}})
-          console.log('ok')
         })
         .catch((error) => {
+          // console.log(error)
           // CATCH ERROR FROM SERVER IF NOT VALID
           if (error.response.data.errors.name) {
             this.errors.name.message = 'Le nom ne doit pas etre vide'

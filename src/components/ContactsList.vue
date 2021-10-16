@@ -14,12 +14,8 @@
           <tbody>
             <tr v-for="contact in contacts" :key="contact._id">
               <td scope="row">{{contact.name}}</td>
-              <td>{{contact.property.name}}</td>
+              <td><router-link v-bind:to="{name: 'Property', params: {id: contact.property._id}}">{{contact.property.name}}</router-link></td>
             </tr>
-            <!-- <tr>
-              <td scope="row">Rose</td>
-              <td>Miller</td>
-            </tr> -->
           </tbody>
       </table>
     </div>

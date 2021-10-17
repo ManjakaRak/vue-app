@@ -1,5 +1,6 @@
 <template>
   <div class="main" @click="hideNotification">
+  <nav-component></nav-component>
     <transition name="notification">
       <div v-if="propertyAdded" id="notification-content">
         <div id="notification">Propriété ajoutée <i class="fa fa-check-circle" aria-hidden="true"></i></div>
@@ -44,12 +45,14 @@ import Ban from './Ban.vue'
 import Footer from './Footer'
 import Property from './Property.vue'
 import axios from 'axios'
+import Navbar from './Navbar.vue'
 export default {
   name: 'Main',
   components: {
     'ban-component': Ban,
     'property-component': Property,
-    'footer-component': Footer
+    'footer-component': Footer,
+    'nav-component': Navbar
   },
   data () {
     return {

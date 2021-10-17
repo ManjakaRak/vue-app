@@ -1,5 +1,6 @@
 <template>
   <div>
+    <nav-component></nav-component>
     <ban-component></ban-component>
     <div class="container mt-5">
 
@@ -19,18 +20,22 @@
           </tbody>
       </table>
     </div>
+    <footer-component></footer-component>
   </div>
+
 </template>
 
 <script>
 import Ban from './Ban.vue'
 import Footer from './Footer.vue'
+import Navbar from './Navbar.vue'
 import axios from 'axios'
 export default {
   name: 'ConstacsList',
   components: {
     'ban-component': Ban,
-    'footer-component': Footer
+    'footer-component': Footer,
+    'nav-component': Navbar
   },
   data () {
     return {

@@ -5,16 +5,18 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
+const router = require('./routers/index')
+
 // controllers
 const contactController = require('./controllers/contacts')
 const propertyController = require('./controllers/properties')
-// const router = express.Router()
 
 // instance express
 const app = express()
 
 // use
 app.use(cors())
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 // connect to MongoDB
@@ -24,14 +26,10 @@ mongoose.connect('mongodb://localhost/ecommerce', {
 }).then(_ => {
   console.log('Connection to db has made successfully')
 }).catch(err => {
-  console.log(err.stack)
+  console.log(err)
 })
 
-// config api routes (endpoints)
-app.get('/api', (_, res) => {
-  res.json({message: 'API initialized'})
-})
-// app.get('/', router)
+app.use(router)
 
 // PORT
 const PORT = process.env.PORT || 5000
@@ -39,6 +37,7 @@ const PORT = process.env.PORT || 5000
 // fetch data from controllers
 propertyController(app)
 contactController(app)
+// securityController(app)
 
 // run server
 app.listen(PORT, () => {

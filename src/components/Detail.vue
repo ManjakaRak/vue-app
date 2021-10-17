@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <nav-component></nav-component>
     <ban-component></ban-component>
     <div  class="mt-5 main-container row">
       <section class="col-md-9">
@@ -111,6 +112,7 @@
 
 <script>
 import Ban from './Ban.vue'
+import NavBar from './Navbar.vue'
 import axios from 'axios'
 export default {
   name: 'Detail',
@@ -127,7 +129,8 @@ export default {
     }
   },
   components: {
-    'ban-component': Ban
+    'ban-component': Ban,
+    'nav-component': NavBar
   },
   methods: {
     loadProperty () {

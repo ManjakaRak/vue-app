@@ -7,7 +7,7 @@ const PropertyModel = require('../models/Property')
 const controller = app => {
   // get all properties
   app.get('/api/properties', (req, res) => {
-    PropertyModel.find({waiting: false})
+    PropertyModel.find({})
       .then(data => {
         res.send(data)
       })

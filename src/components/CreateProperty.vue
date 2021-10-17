@@ -1,5 +1,6 @@
 <template>
   <div class="create-property">
+    <nav-component></nav-component>
     <ban-component></ban-component>
     <form @submit.prevent="handleSubmit" class="container mb-5">
       <h2 class="display-4 mt-5">Ajouter un propriété</h2>
@@ -97,11 +98,13 @@
 import axios from 'axios'
 import Ban from './Ban.vue'
 import Footer from './Footer'
+import NavBar from './Navbar.vue'
 export default {
   name: 'CreateProperty',
   components: {
     'ban-component': Ban,
-    'footer-component': Footer
+    'footer-component': Footer,
+    'nav-component': NavBar
   },
   data () {
     return {

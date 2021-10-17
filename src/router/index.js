@@ -4,6 +4,7 @@ import Main from '@/components/Main'
 import AddProperty from '@/components/CreateProperty'
 import Property from '@/components/Detail'
 import Contacts from '@/components/ContactsList'
+import AdminLogin from '@/components/AdminLogin'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/contacts',
       name: 'ContactsList',
       component: Contacts
+    },
+    {
+      path: '/admin',
+      name: 'AdminLogin',
+      component: AdminLogin
     }
   ],
   mode: 'history'

@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <navbar-component></navbar-component>
+    <!-- <navbar-component></navbar-component> -->
     <router-view/>
   </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue'
-// import 'bootstrap/dist/js/bootstrap'
+// import Navbar from './components/Navbar.vue'
 export default {
   name: 'App',
   components: {
-    'navbar-component': Navbar
+    // 'navbar-component': Navbar
   }
 }
 </script>
@@ -26,5 +25,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>

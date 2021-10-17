@@ -1,5 +1,6 @@
 <template>
   <div class="content" :id="property.id">
+  <nav-component></nav-component>
     <div class="card-header">
       <ul class="nav nav-pills card-header-pills">
         <li class="nav-item">
@@ -27,8 +28,12 @@
 </template>
 
 <script>
+import NavBar from './Navbar.vue'
 export default {
   name: 'Property',
+  components: {
+    'nav-component': NavBar
+  },
   props: ['property'],
   data () {
     return {

@@ -108,6 +108,8 @@ export default {
   },
   data () {
     return {
+      // storage of token
+      token: null,
       achatSelected: false,
       achatCategory: 'Achat',
       allocationSelected: false,
@@ -188,7 +190,10 @@ export default {
         method: 'post',
         url: 'http://localhost:5000/api/property/add',
         // url: 'http://localhost:7000/api/property/add',
-        headers: {'Content-Type': 'application/json'}, // set header for json handling
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': this.token
+        }, // set header for json handling
         data: this.property
       })
         .then((data) => {
@@ -253,6 +258,12 @@ export default {
             this.errors.category.check = false
           }
         })
+    }
+  },
+  mounted () {
+    this.token = window.localStorage.getItem('auth')
+    if (!this.token) {
+      this.$router.push('/admin')
     }
   }
 }

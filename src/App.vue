@@ -1,12 +1,10 @@
 <template>
   <div id="app">
-    <!-- <navbar-component></navbar-component> -->
     <router-view/>
   </div>
 </template>
 
 <script>
-// import Navbar from './components/Navbar.vue'
 export default {
   name: 'App',
   components: {
@@ -19,6 +17,12 @@ export default {
 * {
   margin: 0;
   padding: 0
+}
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

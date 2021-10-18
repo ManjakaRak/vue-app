@@ -1,5 +1,7 @@
 <template>
   <div id="login">
+    <notif-component :notifp="notif" :showNotifp="logout" :message="messageNotif" :statusp="'logout'"></notif-component>
+    <nav-component></nav-component>
     <div class="form-login">
       <div>
       <form @submit.prevent="handleSubmit">
@@ -25,10 +27,14 @@
 <script>
 import axios from 'axios'
 import Footer from './Footer.vue'
+import Navbar from './Navbar.vue'
+import Notif from './Notification.vue'
 export default {
   name: 'AdminLogin',
   components: {
-    'footer-component': Footer
+    'footer-component': Footer,
+    'nav-component': Navbar,
+    'notif-component': Notif
   },
   data () {
     return {
@@ -40,7 +46,10 @@ export default {
       message: '',
       nameCheck: false,
       passwordCheck: false,
-      check: false
+      check: false,
+      logout: false,
+      notif: this.$route.params.logout,
+      messageNotif: 'Vous etes deconnectez'
     }
   },
   methods: {
@@ -61,7 +70,10 @@ export default {
         data: this.user
       })
         .then(response => {
-          console.log(response)
+          const token = response.data.token
+          // if user valid -> get token generated from server
+          window.localStorage.setItem('auth', `${token}`)
+          this.$router.push({name: 'Main', params: {login: true}})
         })
         .catch(error => {
           if (error.response.data.message) {
@@ -72,8 +84,6 @@ export default {
           }
         })
     }
-  },
-  mounted () {
   },
   watch: {
     'user.name' () {
@@ -94,7 +104,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   body, html {
     margin: 0;
     padding: 0;

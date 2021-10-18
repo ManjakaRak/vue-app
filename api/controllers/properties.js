@@ -1,6 +1,6 @@
 // import model(s)
 const PropertyModel = require('../models/Property')
-
+const userVerify = require('../utils/verifyToken')
 /**
  * @param app: express()
  */
@@ -9,7 +9,7 @@ const controller = app => {
   app.get('/api/properties', (req, res) => {
     PropertyModel.find({})
       .then(data => {
-        res.send(data)
+        res.json(data)
       })
       .catch(err => {
         res.send(err)
@@ -27,7 +27,7 @@ const controller = app => {
       })
   })
   // post property
-  app.post('/api/property/add', (req, res) => {
+  app.post('/api/property/add',userVerify, (req, res) => {
     // creae new model from PostModel
     const newProperty = new PropertyModel({
       name: req.body.name,

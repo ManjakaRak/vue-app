@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt')
 // jwtToken
 const jwt = require('jsonwebtoken')
 const JWT_SIGN_SECRET = 'it5alooo000ngS1gNs3cr3tttf0SingM1111ToK3NnN'
-
 const Admin = require('../models/User')
 
 module.exports = {
@@ -60,12 +59,12 @@ module.exports = {
     const password = req.body.password
     Admin.findOne({ name: req.body.name }, (error, user) => {
       if (error) {
-        res.status(500).json('User not found')
+        res.status(400).json({message: 'Utilisateur introuble'})
       }
       if (user) {
         bcrypt.compare(password, user.password, (errorCompare, valid) => {
           if (errorCompare) {
-            res.status(400).send('Error has happen')
+            res.status(500).json({message: 'Une erreur est survenue'})
           }
           if (valid) {
             // create token for the log in user
@@ -77,39 +76,19 @@ module.exports = {
             }, JWT_SIGN_SECRET)
             res.json({'token': token})
           } else {
-            res.status(401).json({message: 'Votre mode de passe est incorrect'})
+            res.status(401).json({message: 'Votre mot de passe est incorrect'})
           }
         })
       } else {
-        res.status(403).json({message: 'Utilisateur vide ou incorrect'})
+        res.status(403).json({message: 'Utilisateur introuvable'})
       }
     })
   },
 
   // get user loged
   getAdmin(req, res) {
-    // get an user but an authentication is needed to access on the user account
-    // we can access on the account vie UserId
-    // the Id is store in token generate on login
-    let userId
-    // token will store on header req
-
-    const header = req.headers['authorization']
-    
-    // parse token
-    const parsedToken = header ? header.replace('Bearer ', '') : null
-    
-    // verify token
-    if (parsedToken) {
-      try {
-        const token = jwt.verify(parsedToken, JWT_SIGN_SECRET)
-        userId = token.userId
-      } catch (error) {
-        res.status(400).send('Token invalid')
-      }
-    } else {
-      res.status(500).send('Token not found')
+    if (req.user) {
+      res.send(req.user)
     }
-    res.send(userId)
   }
 }

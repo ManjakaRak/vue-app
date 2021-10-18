@@ -5,6 +5,7 @@ import AddProperty from '@/components/CreateProperty'
 import Property from '@/components/Detail'
 import Contacts from '@/components/ContactsList'
 import AdminLogin from '@/components/AdminLogin'
+import PageNotFound from '@/components/PageNotFound'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/admin',
       name: 'AdminLogin',
       component: AdminLogin
+    },
+    {
+      path: '/404',
+      name: 'PageNotFound',
+      component: PageNotFound
     }
   ],
   mode: 'history'

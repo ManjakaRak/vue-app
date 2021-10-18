@@ -7,18 +7,12 @@
 
 <script>
 export default {
-
   name: 'PageNotFound',
-
-  data () {
-    return {
-
-    }
+  mounted () {
+    console.log(window.status)
   }
 }
 </script>
 
 <style scoped>
-  .notfound {
-  }
 </style>

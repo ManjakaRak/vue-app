@@ -1,11 +1,8 @@
 <template>
-  <div class="main" @click="hideNotification">
+  <div class="main">
   <nav-component></nav-component>
-    <transition name="notification">
-      <div v-if="propertyAdded" id="notification-content">
-        <div id="notification">Propriété ajoutée <i class="fa fa-check-circle" aria-hidden="true"></i></div>
-      </div>
-    </transition>
+    <notif-component :notifp="this.$route.params.logout" :statusp="'logout'" :showNotifp="logout" :message="logoutMessageNotif"></notif-component>
+    <!-- <notif-component :notifp="this.$route.params.message" :statusp="'addP'" :showNotifp="propertyAdded" :message="addPMessageNotif"></notif-component> -->
     <ban-component></ban-component>
     <div  class="main-container row">
       <section class="col-md-9">
@@ -46,49 +43,39 @@ import Footer from './Footer'
 import Property from './Property.vue'
 import axios from 'axios'
 import Navbar from './Navbar.vue'
+import Notif from './Notification.vue'
 export default {
   name: 'Main',
   components: {
     'ban-component': Ban,
     'property-component': Property,
     'footer-component': Footer,
-    'nav-component': Navbar
+    'nav-component': Navbar,
+    'notif-component': Notif,
+    'propertyAdded': 'Ajouter!!!'
   },
   data () {
     return {
+      logoutMessageNotif: 'Vous etes deconnectez',
+      addPMessageNotif: 'Propriété ajoutée',
       properties: [],
       emptyProperties: true,
-      propertyAdded: false
+      propertyAdded: false,
+      logout: false
     }
   },
   async mounted () {
     await this.loadProperties()
     await this.checkIfEmptyProperties()
-    // operation for notification
-    if (this.$route.params.message) {
-      this.propertyAdded = true
-    }
-    // animation on start
-    setTimeout(() => {
-      // this.propertyAdded = true
-      if (this.propertyAdded) {
-        document.getElementById('notification-content').style.opacity = '1'
-        document.getElementById('notification-content').style.top = '40px'
-      }
-    }, 100)
-    // hide notification automatically
-    setTimeout(() => {
-      if (this.propertyAdded) {
-        this.hideNotification()
-      }
-    }, 3000)
-    // end operation for notification
   },
   methods: {
     async loadProperties () {
       await axios({
         url: 'http://localhost:5000/api/properties',
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
         .then(response => {
           this.properties = response.data
@@ -96,17 +83,15 @@ export default {
           // check if properties are empty after fetch data from server
           this.checkIfEmptyProperties()
         })
-        .catch(error => {
-          console.log(error)
+        .catch(_ => {
+          // this.$router.push('/admin')
+          console.log('error')
         })
     },
     checkIfEmptyProperties () {
       if (this.properties.length !== 0) {
         this.emptyProperties = false
       }
-    },
-    hideNotification () {
-      this.propertyAdded = false
     }
   }
 }
@@ -114,30 +99,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  #notification-content {
-    width: 100%;
-    position: fixed;
-    z-index: 1000000;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    opacity: 0;
-    transition: all 500ms ease-in;
-    top: -100px;
-  }
-  #notification {
-    background-color: #42b983;
-    padding: 20px;
-    font-size: 20px;
-    font-weight: 700;
-  }
-  .notification-leave-active {
-    transition: all 500ms ease-out;
-  }
-  .notification-leave-to {
-    opacity: 0;
-    transform: translateY(-100px);
-  }
   .col-sm-4 {
     padding: 0;
   }

@@ -26,6 +26,11 @@
           </transition>
         </div>
       </div>
+      <div v-if="adminStatus" class="navbar-nav admin-button">
+        <form @submit.prevent="handleSubmit">
+          <button type="submit" class="btn btn-danger">Deconnexion</button>
+        </form>
+      </div>
     </div>
   </nav>
 </template>
@@ -35,7 +40,8 @@ export default {
   name: 'Navbar',
   data () {
     return {
-      showCategoryMenu: false
+      showCategoryMenu: false,
+      adminStatus: false
     }
   },
 
@@ -45,13 +51,30 @@ export default {
     },
     hideMenu () {
       this.showCategoryMenu = false
+    },
+    handleSubmit () {
+      window.localStorage.removeItem('auth')
+      if (this.$route.path === '/admin') {
+        this.$router.push({name: 'Main', params: {logout: true}})
+      } else {
+        this.$router.push({name: 'AdminLogin', params: {logout: true}})
+      }
     }
-
+  },
+  beforeMount () {
+    const token = window.localStorage.getItem('auth')
+    if (token) {
+      this.adminStatus = true
+    }
   }
 }
 </script>
 
 <style scoped>
+  .admin-button {
+    position: absolute;
+    right: 10px;
+  }
   .fade-category-enter {
     opacity: 0;
     transform: translateY(-10px);

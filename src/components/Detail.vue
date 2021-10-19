@@ -141,10 +141,12 @@ export default {
         .then(response => {
           this.property = response.data
         })
+        .catch(_ => {
+          this.$router.push('/')
+        })
     },
     async handleContactForm () {
       this.contact.property = this.property
-      this.contact.property.waiting = true
       await axios({
         url: 'http://localhost:5000/api/contact/add',
         method: 'POST',
@@ -152,7 +154,7 @@ export default {
         data: this.contact
       })
         .then(data => {
-          this.$router.push({name: 'ContactsList', params: {message: 'success'}})
+          this.$router.push({name: 'Thanks', params: {check: true}})
         })
         .catch(error => {
           if (error.response.data.errors.name) {
@@ -180,6 +182,7 @@ export default {
             this.contactError.email.check = false
           }
         })
+        // this.contact.property.waiting = true
     }
   },
   computed: {

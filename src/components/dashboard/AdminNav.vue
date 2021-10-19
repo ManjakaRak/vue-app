@@ -2,7 +2,7 @@
   <div id="admin-nav-component">
     <ul id="options-list">
       <li><router-link :to="{name: 'Main'}"><i class="fa fa-arrow-left title icon" aria-hidden="true"></i><span class="title text"> My Immo</span></router-link></li>
-      <li @click="handleClick(property)"><i class="fa fa-home icon" aria-hidden="true"></i><span class="text"> Proprietes</span></li>
+      <li @click="handleClick(properties)"><i class="fa fa-home icon" aria-hidden="true"></i><span class="text"> Proprietes</span></li>
       <li @click="handleClick(contact)"><i class="fa fa-handshake icon" aria-hidden="true"></i><span class="text"> Contacts</span></li>
     </ul>
   </div>
@@ -13,7 +13,7 @@ export default {
   name: 'AdminNav',
   data () {
     return {
-      property: 'property',
+      properties: 'properties',
       contact: 'contact'
     }
   },
@@ -24,6 +24,7 @@ export default {
   },
   methods: {
     handleClick (option) {
+      // emit params to adminPanel
       this.$emit('switchMenu', option)
     }
   }

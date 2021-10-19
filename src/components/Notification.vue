@@ -67,7 +67,8 @@ export default {
     background-color: tomato;
   }
   .notification-addP-color {
-    background-color: yellowgreen;
+    background-color: rgb(205, 60, 50);
+    color: black
   }
   #notification {
     padding: 20px;

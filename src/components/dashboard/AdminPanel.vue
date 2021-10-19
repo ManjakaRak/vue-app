@@ -1,7 +1,7 @@
 <template>
   <div class="admin-panel">
     <div class="admin-nav" @mouseleave="init" @mouseenter="runAnime">
-      <admin-nav-component @switchMenu="console"></admin-nav-component>
+      <admin-nav-component @switchMenu="switchMenu"></admin-nav-component>
     </div>
     <div class="admin-content">
       <transition name="fade-menu">
@@ -19,19 +19,23 @@ import AdminNavVue from './AdminNav.vue'
 import AdminContact from './AdminContact.vue'
 import AdminPropertiesVue from './AdminProperties.vue'
 export default {
+  // NAME
   name: 'AdminPanel',
+  // COMPONENTS
   components: {
     'admin-nav-component': AdminNavVue,
     'contact-list': AdminContact,
     'admin-properties': AdminPropertiesVue
   },
+  // DATA
   data () {
     return {
       max: false,
-      contactList: true,
+      contactList: false,
       adminProperties: false
     }
   },
+  // METHOD
   methods: {
     runAnime () {
       if (!this.max) {
@@ -55,18 +59,31 @@ export default {
       }
       this.max = false
     },
-    console (params) {
+    // fetch params from admin-nav
+    switchMenu (params) {
       if (params === 'contact') {
         this.contactList = true
       } else {
         this.contactList = false
       }
-      if (params === 'property') {
+      if (params === 'properties') {
         this.adminProperties = true
       } else {
         this.adminProperties = false
       }
+      if (params === 'property') {
+        this.property = true
+      } else {
+        this.property = false
+      }
     }
+  },
+  mounted () {
+    (() => {
+      if (!this.contactList) {
+        this.adminProperties = true
+      }
+    })()
   }
 }
 </script>

@@ -17,24 +17,25 @@ const controller = (app) => {
 
   // add a new contact
   app.post('/api/contact/add', (req, res) => {
+    const property = req.body.property
+    property.waiting = true
     // change waiting to true => the property is not avable now
-    PropertyModel.findOneAndUpdate({ name: req.body.property.name }, { $set: { waiting: true } }, function (error) {
-      if (error) {
-        console.log(error)
-      }
-    })
     const newContact = new ContactModel({
       name: req.body.name,
       lastName: req.body.lastName,
       tel: req.body.tel,
       email: req.body.email,
       message: req.body.message,
-      property: req.body.property,
+      property: property,
       pending: true
     })
-
     newContact.save()
-      .then(data => {
+    .then(data => {
+        PropertyModel.findOneAndUpdate({ name: req.body.property.name }, { $set: { waiting: true } }, function (error) {
+          if (error) {
+            console.log(error)
+          }
+        })
         res.status(200).json(data)
       })
       .catch(error => {

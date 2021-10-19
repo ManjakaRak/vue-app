@@ -12,23 +12,36 @@
         <tbody>
           <tr v-for="contact in contacts" :key="contact._id">
             <td>{{contact.name}}</td>
-            <td><router-link v-bind:to="{name: 'Property', params: {id: contact.property._id}}">{{contact.property.name}}</router-link></td>
+            <td><span @click="handleClick(contact.property._id)" class="property-name">{{contact.property.name}}</span></td>
             <td class="action"><a href=""><button class="btn btn-warning">Check</button></a></td>
           </tr>
         </tbody>
     </table>
+    <!-- PROPERTY -->
+    <transition name="fade-menu">
+      <property-component :propPropertyId="propertyId" @hide="hide" v-if="showProperty"></property-component>
+    </transition>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import AdminDetailVue from './AdminDetail.vue'
 export default {
   name: 'AdminContact',
+  // COMPONENTS
+  components: {
+    'property-component': AdminDetailVue
+  },
+  // DATA
   data () {
     return {
-      contacts: []
+      contacts: [],
+      showProperty: false,
+      propertyId: ''
     }
   },
+  // METHODS
   methods: {
     async loadContacts () {
       await axios({
@@ -41,8 +54,16 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    handleClick (params) {
+      this.showProperty = true
+      this.propertyId = params
+    },
+    hide () {
+      this.showProperty = false
     }
   },
+  // MOUNTED
   mounted () {
     this.loadContacts()
   }
@@ -64,5 +85,9 @@ export default {
     color: red;
     text-decoration: none;
     /* font-family: 'Courier New', Courier, monospace; */
+  }
+  .property-name:hover {
+    color: cornflowerblue;
+    cursor: pointer
   }
 </style>

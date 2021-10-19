@@ -263,7 +263,7 @@ export default {
   mounted () {
     this.token = window.localStorage.getItem('auth')
     if (!this.token) {
-      this.$router.push('/admin')
+      this.$router.push('/admin/login')
     }
   }
 }

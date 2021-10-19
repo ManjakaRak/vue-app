@@ -1,8 +1,6 @@
 <template>
   <div class="main">
   <nav-component></nav-component>
-    <notif-component :notifp="this.$route.params.logout" :statusp="'logout'" :showNotifp="logout" :message="logoutMessageNotif"></notif-component>
-    <!-- <notif-component :notifp="this.$route.params.message" :statusp="'addP'" :showNotifp="propertyAdded" :message="addPMessageNotif"></notif-component> -->
     <ban-component></ban-component>
     <div  class="main-container row">
       <section class="col-md-9">
@@ -64,9 +62,9 @@ export default {
       logout: false
     }
   },
-  async mounted () {
-    await this.loadProperties()
-    await this.checkIfEmptyProperties()
+  created () {
+    this.loadProperties()
+    this.checkIfEmptyProperties()
   },
   methods: {
     async loadProperties () {
@@ -88,7 +86,7 @@ export default {
           console.log('error')
         })
     },
-    checkIfEmptyProperties () {
+    async checkIfEmptyProperties () {
       if (this.properties.length !== 0) {
         this.emptyProperties = false
       }

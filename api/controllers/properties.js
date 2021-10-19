@@ -7,7 +7,7 @@ const userVerify = require('../utils/verifyToken')
 const controller = app => {
   // get all properties
   app.get('/api/properties', (req, res) => {
-    PropertyModel.find({})
+    PropertyModel.find({waiting: false})
       .then(data => {
         res.json(data)
       })
@@ -18,9 +18,28 @@ const controller = app => {
   // fetch one specific property
   app.get('/api/property/:id', (req, res) => {
     // PropertyModel.findOne({'_id': req.params.id}) OR
-    PropertyModel.findById(req.params.id)
+    PropertyModel.findOne({_id: req.params.id, waiting: false})
       .then(data => {
-        res.send(data)
+        if (data) {
+          res.status(200).send(data)
+        } else {
+          res.status(400).send(data)
+        }
+      })
+      .catch(error => {
+        res.send(error)
+      })
+  })
+  // fetch one specific property for admin
+  app.get('/api/admin/property/:id', (req, res) => {
+    // PropertyModel.findOne({'_id': req.params.id}) OR
+    PropertyModel.findOne({_id: req.params.id, waiting: true})
+      .then(data => {
+        if (data) {
+          res.status(200).send(data)
+        } else {
+          res.status(400).send(data)
+        }
       })
       .catch(error => {
         res.send(error)

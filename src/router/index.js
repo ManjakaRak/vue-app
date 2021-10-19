@@ -3,8 +3,8 @@ import Router from 'vue-router'
 import Main from '@/components/Main'
 import AddProperty from '@/components/CreateProperty'
 import Property from '@/components/Detail'
-import Contacts from '@/components/ContactsList'
 import PageNotFound from '@/components/PageNotFound'
+import Thanks from '@/components/Thanks'
 // Admin component
 import AdminLogin from '@/components/AdminLogin'
 import AdminPanel from '@/components/dashboard/AdminPanel'
@@ -29,12 +29,7 @@ export default new Router({
       component: Property
     },
     {
-      path: '/contacts',
-      name: 'ContactsList',
-      component: Contacts
-    },
-    {
-      path: '/admin',
+      path: '/admin/login',
       name: 'AdminLogin',
       component: AdminLogin
     },
@@ -43,9 +38,14 @@ export default new Router({
       name: 'PageNotFound',
       component: PageNotFound
     },
+    {
+      path: '/thanks',
+      name: 'Thanks',
+      component: Thanks
+    },
     // Admin Dashboard
     {
-      path: '/admin/main',
+      path: '/admin',
       name: 'AdminPanel',
       component: AdminPanel
     }

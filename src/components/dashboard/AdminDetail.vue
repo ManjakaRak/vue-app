@@ -77,20 +77,17 @@ export default {
     }
   },
   methods: {
-    loadProperty () {
-      axios({
+    async loadProperty () {
+      const response = await axios({
+        // affect props['propertyId'] to server for handling right property
         url: `http://localhost:5000/api/admin/property/${this.propertyId}`,
         method: 'GET'
       })
-        .then(response => {
-          this.property = response.data
-        })
-        .catch(_ => {
-          this.$router.push('/')
-        })
+      this.property = response.data
     },
     // HIDE PROPERTY
     hide () {
+      // emit parent component (contact_list)
       this.$emit('hide')
     },
     stopPropagation (e) {
@@ -117,6 +114,7 @@ export default {
   },
   mounted () {
     this.loadProperty()
+    // go out of property's modale with "esc"
     window.addEventListener('keyup', (e) => {
       if (e.key === 'Escape') {
         this.hide()

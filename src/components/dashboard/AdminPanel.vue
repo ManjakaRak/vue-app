@@ -1,5 +1,6 @@
 <template>
   <div class="admin-panel">
+    <notif-component :notifp="logInNotif" :message="'Vous etes connectez'"></notif-component>
     <!-- HIDDEN DECONNICTION BUTTON -->
     <div class="deconnect">
       <i @click="showDeconnect" :class="{'fa fa-angle-right': this.show, 'fa fa-angle-left': !this.show}" aria-hidden="true"></i><transition name="fade-deconnect">
@@ -25,6 +26,7 @@
 import AdminNavVue from './AdminNav.vue'
 import AdminContact from './AdminContact.vue'
 import AdminPropertiesVue from './AdminProperties.vue'
+import NotificationVue from '../Notification.vue'
 import axios from 'axios'
 export default {
   // NAME
@@ -33,17 +35,19 @@ export default {
   components: {
     'admin-nav-component': AdminNavVue,
     'contact-list': AdminContact,
-    'admin-properties': AdminPropertiesVue
+    'admin-properties': AdminPropertiesVue,
+    'notif-component': NotificationVue
   },
   // DATA
   data () {
     return {
-      show: false,
-      max: false,
-      contactList: false,
-      adminProperties: true,
-      token: null,
-      user: null
+      show: false, // show deconnect button
+      max: false, // active anime on nav
+      contactList: false, // fetch contact list
+      adminProperties: true, // fetch properties
+      token: null, // fetch token
+      user: null, // fecth the admin,
+      logInNotif: this.$route.params.login// anime log in notif when admin is redirect here
     }
   },
   // METHOD

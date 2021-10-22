@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <notif-component :notifp="notif" :showNotifp="logout" :message="messageNotif" :statusp="'logout'"></notif-component>
+    <notif-component :notifp="notif" :showNotifp="logout" :message="messageNotif"></notif-component>
     <nav-component></nav-component>
     <div class="form-login">
       <div>

@@ -54,7 +54,7 @@ export default {
     list-style: none;
   }
   .text {
-    transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
     position: absolute;
     opacity: 0;
     left: 30px;
@@ -63,7 +63,7 @@ export default {
     margin-bottom: 10px;
     font-size: 20px;
     padding: 10px;
-    transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    /* transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1); */
   }
   li:hover {
     background-color: #428A8BFF;

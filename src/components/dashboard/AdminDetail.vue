@@ -145,7 +145,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.contactObj)
     // CHECK THE PROPS IN THE MOUNTED HOOK
     this.check()
     // CLOSE SECTION ON 'ESC' PRESSING BUTTON
@@ -225,7 +224,6 @@ export default {
   }
   #property-name::after {
     position: absolute;
-    /*background: linear-gradient(#fff #111);*/
     border-bottom: 3px solid;
     border-right: 200px solid;
     content: "";

@@ -1,7 +1,7 @@
 <template>
   <transition name="notification">
     <div v-if="showNotif" id="notification-content">
-      <div id="notification" :class="{'notification-logout-color': status='logout', 'notification-addP-color': status='addP'}">{{ message }}<i class="fa fa-check-circle" aria-hidden="true"></i></div>
+      <div id="notification" class="notification-color">{{ message }}<i class="fa fa-check-circle" aria-hidden="true"></i></div>
     </div>
   </transition>
 </template>
@@ -11,15 +11,13 @@ export default {
   props: [
     'showNotifp',
     'notifp',
-    'message',
-    'statusp'
+    'message'
   ],
   name: 'Notification',
   data () {
     return {
       showNotif: this.showNotif,
-      notif: this.notifp,
-      status: this.statusp
+      notif: this.notifp
     }
   },
   methods: {
@@ -63,12 +61,9 @@ export default {
     transition: all 500ms ease-in;
     top: -100px;
   }
-  .notification-logout-color {
-    background-color: tomato;
-  }
-  .notification-addP-color {
-    background-color: rgb(205, 60, 50);
-    color: black
+  .notification-color {
+    background-color: rgb(0, 17, 255);
+    color: grey
   }
   #notification {
     padding: 20px;

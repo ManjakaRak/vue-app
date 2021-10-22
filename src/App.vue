@@ -23,6 +23,7 @@ body, html {
     padding: 0;
     height: 100%;
     width: 100%;
+    scroll-behavior: smooth;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

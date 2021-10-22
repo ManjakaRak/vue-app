@@ -1,6 +1,8 @@
 <template>
+<!-- CHOOOSE ON SELECTION ACCORDING TO COMPONENT PARAMS VIA PARENT COMPONENT  -->
   <div id="property" @click="hide">
-    <section @click="stopPropagation">
+    <!-- SHOW PROPERTY -->
+    <section v-if="propertySection" @click="stopPropagation">
       <div class="center">
         <div class="home">
           <div class="category">
@@ -42,22 +44,36 @@
             <div class="outside">
               <div>
                 <h4>Eau</h4>
-                <h4 class="text-center" v-if="property.water"><i class="text-info fas fa-check" aria-hidden="true"></i></h4>
+                <h4 class="text-center" v-if="property.water"><i class="text-info fas fa-isProperty" aria-hidden="true"></i></h4>
                 <h4 class="text-center" v-else><i class="text-danger fas fa-times" aria-hidden="true"></i></h4>
               </div>
               <div>
                 <h4>Eléctricité</h4>
-                <h4 class="text-center" v-if="property.electricity"><i class="text-info fas fa-check" aria-hidden="true"></i></h4>
+                <h4 class="text-center" v-if="property.electricity"><i class="text-info fas fa-isProperty" aria-hidden="true"></i></h4>
                 <h4 class="text-center" v-else><i class="text-danger fas fa-times" aria-hidden="true"></i></h4>
               </div>
               <div>
                 <h4>Climatisation</h4>
-                <h4 class="text-center" v-if="property.climatization"><i class="text-info fa fa-check" aria-hidden="true"></i></h4>
+                <h4 class="text-center" v-if="property.climatization"><i class="text-info fa fa-isProperty" aria-hidden="true"></i></h4>
                 <h4 class="text-center" v-else><i class="text-danger fas fa-times" aria-hidden="true"></i></h4>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
+    <!-- SHOW CONTACT -->
+    <section v-if="contactSection" @click="stopPropagation">
+      <div class="center">
+        <h3 class="display-4">Contact</h3>
+        <hr class="mb-3">
+        <p>{{this.contactObj.name}} {{this.contactObj.lastName}}</p>
+        <hr>
+        <p>{{this.contactObj.tel}}</p>
+        <hr>
+        <p>{{this.contactObj.email}}</p>
+        <hr class="mb-1">
+        <p v-if="this.contactObj.message"><q>{{this.contactObj.message}}</q></p>
       </div>
     </section>
   </div>
@@ -68,15 +84,23 @@ import axios from 'axios'
 export default {
   name: 'AdminDetail',
   props: [
-    'propPropertyId'
+    'propPropertyId', // PROPERTY PARAMS
+    'contact', // CONTACT PARAMS
+    'type'// PROPERTY OR CONTACT
   ],
   data () {
     return {
+      contactObj: this.contact,
       property: {},
-      propertyId: this.propPropertyId
+      propertyId: this.propPropertyId,
+      contactSection: false,
+      propertySection: false
     }
   },
   methods: {
+    async loadContact () {
+      console.log('contact')
+    },
     async loadProperty () {
       const response = await axios({
         // affect props['propertyId'] to server for handling right property
@@ -92,11 +116,19 @@ export default {
     },
     stopPropagation (e) {
       e.stopPropagation()
+    },
+    check () {
+      // AFFECTING PROPS TO DATA (PROPS CANT BE MUTATED)
+      if (this.type === 'property') {
+        this.loadProperty()
+        this.propertySection = true
+      } else {
+        this.contactSection = true
+      }
     }
   },
   computed: {
     formattedPrice () {
-      // if (this.property.price) {
       let tab = Array.from(this.property.price + '')
       let j = 0
       for (let i = tab.length - 1; i >= 0; i--) {
@@ -113,8 +145,10 @@ export default {
     }
   },
   mounted () {
-    this.loadProperty()
-    // go out of property's modale with "esc"
+    console.log(this.contactObj)
+    // CHECK THE PROPS IN THE MOUNTED HOOK
+    this.check()
+    // CLOSE SECTION ON 'ESC' PRESSING BUTTON
     window.addEventListener('keyup', (e) => {
       if (e.key === 'Escape') {
         this.hide()
@@ -126,6 +160,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  p {
+    margin: 0;
+  }
   small {
     color: crimson;
     font-size: 10px;

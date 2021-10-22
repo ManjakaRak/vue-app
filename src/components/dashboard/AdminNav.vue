@@ -1,7 +1,7 @@
 <template>
   <div id="admin-nav-component">
     <ul id="options-list">
-      <li><router-link :to="{name: 'Main'}"><i class="fa fa-arrow-left title icon" aria-hidden="true"></i><span class="title text"> My Immo</span></router-link></li>
+      <li><router-link :to="{name: 'Main'}"><i class="fa fa-arrow-left title icon" aria-hidden="true"></i><span class="text"> My Immo</span></router-link></li>
       <li @click="handleClick(properties)"><i class="fa fa-home icon" aria-hidden="true"></i><span class="text"> Proprietes</span></li>
       <li @click="handleClick(contact)"><i class="fa fa-handshake icon" aria-hidden="true"></i><span class="text"> Contacts</span></li>
     </ul>

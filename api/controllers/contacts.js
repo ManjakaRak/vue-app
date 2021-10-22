@@ -1,6 +1,7 @@
 // model
 const ContactModel = require('../models/Contact')
 const PropertyModel = require('../models/Property')
+const verifyToken = require('../utils/verifyToken')
 
 // create controller
 const controller = (app) => {

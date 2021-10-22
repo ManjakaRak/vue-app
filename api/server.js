@@ -1,17 +1,16 @@
 // server for api rest
-// import
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const router = require('./routers/index')
 
+// instance express
+const app = express()
+
 // controllers
 const contactController = require('./controllers/contacts')
 const propertyController = require('./controllers/properties')
-
-// instance express
-const app = express()
 
 // use
 app.use(cors())

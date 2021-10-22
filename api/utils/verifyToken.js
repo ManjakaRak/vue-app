@@ -9,7 +9,8 @@ module.exports = function (req, res, next) {
     try {
       const tokenVerified = jwt.verify(token, JWT_SIGN_SECRET)
       req.user = tokenVerified
+      // if token verified => move to next middleware => valid
       next()
-    } catch (error) { res.status(400).json({message: 'Token invalid'}) }
+    } catch (error) { res.status(403).json({message: 'Haven\'t authorization'}) }
   }
 }

@@ -108,8 +108,6 @@ export default {
   },
   data () {
     return {
-      // storage of token
-      token: null,
       achatSelected: false,
       achatCategory: 'Achat',
       allocationSelected: false,
@@ -185,6 +183,7 @@ export default {
     },
     // SUBMIT DATTA
     async handleSubmit () {
+      const token = window.localStorage.getItem('auth')
       await axios({
         // handle on server with axios
         method: 'post',
@@ -192,7 +191,7 @@ export default {
         // url: 'http://localhost:7000/api/property/add',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': this.token
+          'Authorization': `${token}`
         }, // set header for json handling
         data: this.property
       })
@@ -258,13 +257,26 @@ export default {
             this.errors.category.check = false
           }
         })
+    },
+    // CHECK IF ADMIN
+    async checkIfAdmin () {
+      const token = window.localStorage.getItem('auth')
+      try {
+        await axios({
+          url: 'http://localhost:5000/api/propertyAdd',
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+          }
+        })
+      } catch (error) {
+        this.$router.push('/admin/login')
+      }
     }
   },
   mounted () {
-    this.token = window.localStorage.getItem('auth')
-    if (!this.token) {
-      this.$router.push('/admin/login')
-    }
+    this.checkIfAdmin()
   }
 }
 </script>

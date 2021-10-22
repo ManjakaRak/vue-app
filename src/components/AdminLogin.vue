@@ -73,7 +73,7 @@ export default {
           const token = response.data.token
           // if user valid -> get token generated from server
           window.localStorage.setItem('auth', `${token}`)
-          this.$router.push({name: 'Main', params: {login: true}})
+          this.$router.push({name: 'AdminPanel', params: {login: true, token: token}})
         })
         .catch(error => {
           if (error.response.data.message) {

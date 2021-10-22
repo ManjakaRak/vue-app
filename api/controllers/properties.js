@@ -1,11 +1,11 @@
 // import model(s)
 const PropertyModel = require('../models/Property')
-const userVerify = require('../utils/verifyToken')
+const verifyToken = require('../utils/verifyToken')
 /**
  * @param app: express()
  */
 const controller = app => {
-  // get all properties
+  // get avalable properties
   app.get('/api/properties', (req, res) => {
     PropertyModel.find({waiting: false})
       .then(data => {
@@ -45,8 +45,11 @@ const controller = app => {
         res.send(error)
       })
   })
+  app.get('/api/propertyAdd', verifyToken, (req, res) => {
+    res.json({ message: 'create property' })
+  })
   // post property
-  app.post('/api/property/add',userVerify, (req, res) => {
+  app.post('/api/property/add',verifyToken, (req, res) => {
     // creae new model from PostModel
     const newProperty = new PropertyModel({
       name: req.body.name,
@@ -63,7 +66,8 @@ const controller = app => {
       sold: false,
       waiting: false
     })
-
+  // create admin add-property route
+  
     newProperty.save()
       .then(data => {
         res.status(200).json(data)
@@ -71,6 +75,6 @@ const controller = app => {
       .catch(error => {
         res.status(400).json(error)
       })
-  })
+    })
 }
 module.exports = controller

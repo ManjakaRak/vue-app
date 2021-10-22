@@ -26,10 +26,17 @@
           </transition>
         </div>
       </div>
-      <div v-if="adminStatus" class="navbar-nav admin-button">
-        <form @submit.prevent="handleSubmit">
-          <button type="submit" class="btn btn-danger">Deconnexion</button>
-        </form>
+      <div v-if="adminStatus" class="admin-button">
+        <ul>
+          <li>
+            <router-link :to="{name: 'AdminPanel'}"><button class="btn btn-primary">Administration</button></router-link>
+          </li>
+          <li>
+            <form @submit.prevent="handleSubmit">
+              <button type="submit" class="btn btn-danger">Deconnexion</button>
+            </form>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
@@ -61,7 +68,7 @@ export default {
       }
     }
   },
-  beforeMount () {
+  mounted () {
     const token = window.localStorage.getItem('auth')
     if (token) {
       this.adminStatus = true
@@ -74,6 +81,13 @@ export default {
   .admin-button {
     position: absolute;
     right: 10px;
+    width: fit-content;
+  }
+  .admin-button ul {
+    display: flex;
+  }
+  .admin-button ul li {
+    margin-left: 10px;
   }
   .fade-category-enter {
     opacity: 0;

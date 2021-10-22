@@ -84,7 +84,6 @@ module.exports = {
       }
     })
   },
-
   // get user loged
   getAdmin(req, res) {
     if (req.user) {

@@ -4,22 +4,35 @@
     <table class="table table-striped table-responsive">
       <thead class="thead-inverse">
         <tr>
-          <th>Client</th>
-          <th>Propriété</th>
+          <th>Clients</th>
+          <th>Propriétés</th>
+          <th>Statut</th>
           <th></th>
         </tr>
         </thead>
         <tbody>
           <tr v-for="contact in contacts" :key="contact._id">
-            <td>{{contact.name}}</td>
-            <td><span @click="handleClick(contact.property._id)" class="property-name">{{contact.property.name}}</span></td>
-            <td class="action"><a href=""><button class="btn btn-warning">Check</button></a></td>
+            <td><span @click="handleClickProperty(contact, 'contact')">{{contact.name}}</span></td>
+            <td><span @click="handleClickProperty(contact.property._id, 'property')" class="property-name">{{contact.property.name}}</span></td>
+            <td class="text-primary" ><i :class="{'fa fa-info-circle': contact.pending, 'fa fa-check-circle text-success': !contact.pending}" aria-hidden="true"></i></td>
+            <td>
+              <div class="text-center">
+                <div class="button">
+                  <button v-if="contact.pending" class="btn btn-warning">Check</button>
+                </div>
+                <div class="button">
+                  <form class="text-right delete-form">
+                    <button class="btn btn-danger">Supprimer</button>
+                  </form>
+                </div>
+              </div>
+            </td>
           </tr>
         </tbody>
     </table>
-    <!-- PROPERTY -->
+    <!-- PROPERTY & CONTACT -->
     <transition name="fade-menu">
-      <property-component :propPropertyId="propertyId" @hide="hide" v-if="showProperty"></property-component>
+      <property-component :type="type" :contact="contact" :propPropertyId="propertyId" @hide="hide" v-if="showProperty"></property-component>
     </transition>
   </div>
 </template>
@@ -37,12 +50,18 @@ export default {
   data () {
     return {
       contacts: [],
+      contact: {},
       showProperty: false,
+      showContact: false,
       propertyId: ''
     }
   },
   // METHODS
   methods: {
+    // CHECKING ORDER
+    checkContact () {
+
+    },
     async loadContacts () {
       await axios({
         url: 'http://localhost:5000/api/contacts',
@@ -55,9 +74,20 @@ export default {
           console.log(error)
         })
     },
-    handleClick (params) {
+    // SHOW PROPERTY COMPONENT ON CLICK
+    handleClickProperty (params, type) {
       this.showProperty = true
-      this.propertyId = params
+      if (type === 'contact') {
+        this.type = 'contact'
+        this.contact = params
+      } else if (type === 'property') {
+        this.type = 'property'
+        this.propertyId = params
+      }
+    },
+    // SHOW CONTACT COMPONENT ON CLICK
+    handleClickContact () {
+      this.showContact = true
     },
     hide () {
       this.showProperty = false
@@ -71,6 +101,16 @@ export default {
 </script>
 
 <style>
+/* DELETE BUTTON */
+  .button {
+    display: inline-block;
+  }
+  .action {
+    display: flex;
+  }
+  .action div {
+    margin-right: 30px;
+  }
   table {
     text-align: center;
   }

@@ -4,9 +4,13 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const router = require('./routers/index')
-
+const path = require('path')
+const serveStatic = require('serve-static')
 // instance express
 const app = express()
+
+// server static
+app.use('/', serveStatic(path.join(__dirname, '../dist')))
 
 // controllers
 const contactController = require('./controllers/contacts')
